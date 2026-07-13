@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="中国银行">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bocRed%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23E21E26%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23BA121A%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20%E5%9C%86%E8%A7%92%E7%BA%A2%E8%89%B2%E5%BA%94%E7%94%A8%E5%BA%95%E6%A1%86%20--%3E%0A%20%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22116%22%20fill%3D%22url%28%23bocRed%29%22%20/%3E%0A%20%20%3C%21--%20%E4%B8%AD%E8%A1%8C%E5%A4%96%E5%9C%86%E7%8E%AF%20--%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22236%22%20r%3D%22144%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%2232%22%20/%3E%0A%20%20%3C%21--%20%E5%86%85%E9%83%A8%E6%96%B9%E5%AD%94%E4%B8%8E%E7%BA%B5%E5%90%91%E6%9F%B1%E9%81%93%20--%3E%0A%20%20%3Cpath%20d%3D%22M256%2092v58M256%20322v58%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%2232%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3Crect%20x%3D%22200%22%20y%3D%22180%22%20width%3D%22112%22%20height%3D%22112%22%20rx%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%2232%22%20/%3E%0A%20%20%3Cpath%20d%3D%22M228%20150h56v30h-56zM228%20292h56v30h-56z%22%20fill%3D%22%23FFFFFF%22/%3E%0A%3C/svg%3E%0A">
+  <title>中国银行</title>
+  <style>
+/**
+ * Bank of China (BOC) Real App Style System
+ * 严格对齐真实的中国银行手机客户端界面截图并以 SVG/精细 CSS 图标重构 UI
+ */
+
+:root {
+  /* 品牌核心色 */
+  --boc-red: #C8161D;
+  --boc-red-dark: #B01218;
+  --boc-red-light: #E82931;
+  --boc-blue: #1A6CDE;
+  
+  /* 页面层级背景 */
+  --bg-app: #F5F6F8;
+  --bg-white: #FFFFFF;
+  
+  /* 账户总览米金渐变卡片色 */
+  --account-gold-bg: linear-gradient(135deg, #FAF5EC 0%, #F4EADF 100%);
+  --account-gold-text: #6B5539;
+  
+  /* 资产管理深蓝科技灰 */
+  --asset-dark-bg: linear-gradient(180deg, #2B3443 0%, #3D495B 100%);
+  
+  /* 首页顶部天蓝渐变 */
+  --home-top-bg: linear-gradient(180deg, #E2F0FE 0%, #F3F8FE 50%, #F5F6F8 100%);
+
+  /* 文本颜色 */
+  --text-main: #1D2129;
+  --text-sub: #4E5969;
+  --text-muted: #86909C;
+  --text-gold: #C59A47;
+  
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-sheet: 0 -4px 20px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background-color: #0F172A;
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* 桌面预览框，在手机或 iPhone Safari (添加到主屏幕) 模式下为满屏原生形态 */
+.app-viewport {
+  width: 100%;
+  height: 100vh;
+  max-width: 430px;
+  max-height: 932px;
+  background-color: var(--bg-app);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 600px) {
+  .app-viewport {
+    border-radius: 44px;
+    border: 10px solid #1E293B;
+    margin: 16px auto;
+  }
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+  flex-shrink: 0;
+}
+
+/* === 通用头部导航栏 === */
+.sub-nav-bar {
+  height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-white);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-main);
+  flex-shrink: 0;
+}
+
+.sub-nav-bar.dark {
+  background: var(--asset-dark-bg);
+  color: #FFFFFF;
+}
+
+.sub-nav-bar .back-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sub-nav-bar .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 主容器可滚动区 */
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10;
+  padding-bottom: 74px;
+  scrollbar-width: none;
+}
+.app-content::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-page {
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+
+.tab-page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ================= SVG 矢量图形封装 ================= */
+.icon-svg {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.icon-svg-lg {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+/* ================= 1. 首页样式 ================= */
+.home-header {
+  padding: 8px 14px 14px 14px;
+  background: var(--home-top-bg);
+}
+
+.home-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.login-avatar-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+
+.login-avatar-pill .avatar-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #E8F2FE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--boc-blue);
+}
+
+/* 沉浸搜索框 */
+.boc-search-pill {
+  flex: 1;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.boc-search-pill .search-btn {
+  color: var(--boc-red);
+  font-weight: 600;
+  border-left: 1px solid #E5E6EB;
+  padding-left: 10px;
+}
+
+.home-top-icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.home-top-icons .icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+
+/* 首页顶部四大金刚入口 */
+.home-main-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 18px 6px 12px 6px;
+  text-align: center;
+}
+
+.shortcut-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.shortcut-icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(26, 108, 222, 0.1);
+  color: var(--boc-blue);
+}
+
+.shortcut-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* 1888元活动横条 */
+.home-promo-banner {
+  margin: 6px 12px 14px 12px;
+  background: linear-gradient(135deg, #1A4CD8 0%, #2A68EA 100%);
+  border-radius: 16px;
+  padding: 14px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 16px rgba(26, 76, 216, 0.2);
+}
+
+/* 首页弧形白色层底 */
+.home-white-sheet {
+  background: #FFFFFF;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 16px 12px;
+  margin-top: -8px;
+  position: relative;
+  z-index: 5;
+}
+
+.service-grid-10 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px 6px;
+  margin-bottom: 18px;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.service-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-text {
+  font-size: 12px;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.news-marquee-bar {
+  background: #F8F9FB;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+
+.news-badge {
+  background: #FFECEE;
+  color: var(--boc-red);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.apple-pay-banner {
+  background: linear-gradient(135deg, #FFF9EB 0%, #FFF4E0 100%);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #FFE8BA;
+}
+
+/* ================= 2. 账户总览页样式 ================= */
+.account-overview-container {
+  padding: 12px 14px;
+}
+
+.account-gold-card {
+  background: var(--account-gold-bg);
+  border: 1px solid #EBE1D3;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.gold-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--account-gold-text);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.gold-card-amount {
+  font-size: 30px;
+  font-weight: 800;
+  color: #3D2D1B;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.gold-card-footer {
+  font-size: 12px;
+  color: var(--account-gold-text);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 10px;
+}
+
+.boc-card-real-item {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid #EBF0F5;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.boc-card-real-item:active {
+  transform: scale(0.99);
+}
+
+.real-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.real-card-thumb {
+  width: 58px;
+  height: 36px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #C8161D, #9D1117);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
+.real-card-thumb.blue {
+  background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+}
+
+.real-card-thumb.gold {
+  background: linear-gradient(135deg, #334155, #0F172A);
+  color: #E6C280;
+}
+
+.real-card-no {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.real-card-type {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.real-card-balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid #F1F5F9;
+  font-size: 13px;
+}
+
+.real-card-actions {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px dashed #E2E8F0;
+  padding-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.real-card-actions .action-link {
+  flex: 1;
+  text-align: center;
+}
+
+.add-account-card-btn {
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  border: 1px solid #EBF0F5;
+}
+
+.add-account-card-btn .main-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A6CDE;
+  margin-bottom: 4px;
+}
+
+.add-account-card-btn .sub-text {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ================= 3. 资产管理页样式 ================= */
+.asset-mgmt-header {
+  background: var(--asset-dark-bg);
+  color: #FFFFFF;
+  padding: 12px 16px 24px 16px;
+}
+
+.asset-reference-tip {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
+.asset-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.asset-diag-pill {
+  background: rgba(255, 255, 255, 0.16);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.asset-timestamp {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 18px;
+}
+
+.asset-two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.asset-col-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.asset-col-item .val {
+  font-size: 24px;
+  font-weight: 700;
+  color: #F6DFB3;
+}
+
+.asset-grid-sheet {
+  background: #FFFFFF;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  margin-top: -14px;
+  padding: 16px;
+  min-height: 400px;
+}
+
+.asset-grid-2x {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.asset-box-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.asset-box-item .label {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin-bottom: 4px;
+}
+
+.asset-box-item .number {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* ================= 4. 信用卡页面样式 ================= */
+.credit-hero-card {
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  border-radius: 18px;
+  padding: 20px;
+  color: #FFFFFF;
+  margin: 12px 14px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.credit-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.credit-card-number {
+  font-family: monospace;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #E2E8F0;
+}
+
+.credit-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 14px;
+}
+
+/* ================= 5. 生活服务页样式 ================= */
+.life-header-bar {
+  padding: 12px 14px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.life-location-tag {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ================= 6. 我的中心样式 ================= */
+.mine-header-red {
+  background: var(--boc-red);
+  color: #FFFFFF;
+  padding: 8px 16px 28px 16px;
+  position: relative;
+}
+
+.mine-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mine-search-input {
+  flex: 1;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #FFFFFF;
+}
+
+.mine-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.mascot-avatar-wrap {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FDE68A, #F59E0B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #FFFFFF;
+  cursor: pointer;
+}
+
+.mascot-setting-badge {
+  position: absolute;
+  bottom: -4px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFF;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+.vip-ribbon-card {
+  background: linear-gradient(90deg, #FDF7EA 0%, #F5E8CC 100%);
+  color: #6A532C;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 4px;
+}
+
+.mine-white-body {
+  background: #F4F5F7;
+  padding: 12px 14px;
+}
+
+.mine-4icons-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 18px 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.mine-asset-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.asset-wave-inner {
+  background: linear-gradient(135deg, #FFFDF9 0%, #FAF5EB 100%);
+  border: 1px solid #F3EAD8;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 10px;
+}
+
+/* ================= 底部 5 大栏目导航 ================= */
+.bottom-tab-bar {
+  height: 64px;
+  background: #FFFFFF;
+  border-top: 1px solid #E8EEF5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: #86909C;
+  cursor: pointer;
+}
+
+.tab-btn .tab-text {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.tab-btn.active {
+  color: var(--boc-red);
+}
+
+/* ================= 增删改查弹窗 Modal ================= */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-sheet {
+  background: #FFFFFF;
+  width: 100%;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  padding: 20px 20px 36px 20px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #D0D5DD;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #F8FAFC;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.boc-btn-primary {
+  flex: 1;
+  background: var(--boc-red);
+  color: #FFFFFF;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boc-btn-danger {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+  padding: 13px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boc-btn-secondary {
+  flex: 1;
+  background: #F1F5F9;
+  color: #334155;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.receipt-seal {
+  width: 74px;
+  height: 74px;
+  border: 2px solid #C8161D;
+  border-radius: 50%;
+  color: #C8161D;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-15deg);
+  margin: 12px auto;
+}
+
+</style>
+</head>
+<body>
+
+  <div class="app-viewport">
+    
+    <div class="safe-area-top"></div>
+
+    <main class="app-content">
+      
+      <!-- ==================== 1. 首页 (对齐截图五 19:01) ==================== -->
+      <section class="tab-page active" id="page-home">
+        <header class="home-header">
+          <div class="home-top-row">
+            <div class="login-avatar-pill" id="secret-login-trigger">
+              <div class="avatar-circle">
+                <svg class="icon-svg" style="width:18px; height:18px; color:var(--boc-blue);" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+              </div>
+              <span style="font-size:10px; margin-top:2px; font-weight:600;">登录</span>
+            </div>
+            <div class="boc-search-pill">
+              <span style="display:flex; align-items:center; gap:6px;">
+                <svg class="icon-svg" style="width:14px; height:14px;" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                请输入搜索内容
+              </span>
+              <span class="search-btn">搜索</span>
+            </div>
+            <div class="home-top-icons">
+              <div class="icon-item">
+                <svg class="icon-svg" style="width:18px; height:18px; color:var(--text-sub);" viewBox="0 0 24 24"><path fill="currentColor" d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>
+                <span style="margin-top:2px;">版本</span>
+              </div>
+              <div class="icon-item">
+                <svg class="icon-svg" style="width:18px; height:18px; color:var(--text-sub);" viewBox="0 0 24 24"><path fill="currentColor" d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 0 0-1.02.24l-2.2 2.2a15.045 15.045 0 0 1-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02A11.36 11.36 0 0 0 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+                <span style="margin-top:2px;">客服</span>
+              </div>
+              <div class="icon-item" style="position: relative;">
+                <svg class="icon-svg" style="width:18px; height:18px; color:var(--text-sub);" viewBox="0 0 24 24"><path fill="currentColor" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                <span style="margin-top:2px;">消息</span>
+                <span style="position:absolute; top:-2px; right:4px; width:6px; height:6px; background:var(--boc-red); border-radius:50%;"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-main-shortcuts">
+            <div class="shortcut-item" onclick="alert('进入安全扫码与收付款功能')">
+              <div class="shortcut-icon-box">
+                <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M9.5 3h-6v6h6V3zm-1.5 4.5h-3v-3h3v3zM9.5 15h-6v6h6v-6zm-1.5 4.5h-3v-3h3v3zM21 3h-6v6h6V3zm-1.5 4.5h-3v-3h3v3zM15 15h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4-4h2v2h-2v-2zm2 2h-2v2h2v-2zm-2 2h2v2h-2v-2zm2-6h2v2h-2v-2zm-4 0h2v2h-2v-2zm2 2h2v2h-2v-2z"/></svg>
+              </div>
+              <span class="shortcut-label" style="margin-top:4px;">扫一扫</span>
+            </div>
+            <div class="shortcut-item" onclick="bocRealApp.switchTab('assetMgmt')">
+              <div class="shortcut-icon-box">
+                <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+              </div>
+              <span class="shortcut-label" style="margin-top:4px;">闲钱宝</span>
+            </div>
+            <div class="shortcut-item" onclick="bocRealApp.switchTab('overview')">
+              <div class="shortcut-icon-box">
+                <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+              </div>
+              <span class="shortcut-label" style="margin-top:4px;">转账</span>
+            </div>
+            <div class="shortcut-item" onclick="bocRealApp.switchTab('overview')">
+              <div class="shortcut-icon-box">
+                <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+              </div>
+              <span class="shortcut-label" style="margin-top:4px;">账户管理</span>
+            </div>
+          </div>
+
+          <div class="home-promo-banner">
+            <div>
+              <div style="font-size: 11px; opacity: 0.85; font-weight:600;">支付超给“利”</div>
+              <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">中行卡支付至高领1888元立减金券包</div>
+            </div>
+            <span style="background: #F59E0B; color: #FFF; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">立即报名</span>
+          </div>
+        </header>
+
+        <!-- 白色弧形底 -->
+        <div class="home-white-sheet">
+          <div class="service-grid-10">
+            <div class="service-item" onclick="bocRealApp.switchTab('overview')">
+              <div class="service-icon" style="background: #EFF6FF; color: #1A6CDE;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8z"/></svg>
+              </div>
+              <span class="service-text">账号转账</span>
+            </div>
+            <div class="service-item" onclick="bocRealApp.switchTab('assetMgmt')">
+              <div class="service-icon" style="background: #FEF2F2; color: #DC2626;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+              </div>
+              <span class="service-text">我的理财</span>
+            </div>
+            <div class="service-item" onclick="bocRealApp.switchTab('assetMgmt')">
+              <div class="service-icon" style="background: #FFF7ED; color: #EA580C;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+              </div>
+              <span class="service-text">存款管理</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon" style="background: #F0FDF4; color: #16A34A;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 21.5h2.1l1.8-8 2.1 2v6.5h2v-7.5l-2.1-2 .6-3c1 .9 2.4 1.5 4.1 1.5v-2c-1.5 0-2.7-.6-3.5-1.5l-.8-1.4C13 4.8 12.2 4.5 11.3 4.5c-.9 0-1.7.5-2.2 1.2L5 12v5h2v-4.5l2.8-3.6z"/></svg>
+              </div>
+              <span class="service-text">马拉松专区</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon" style="background: #FAF5FF; color: #9333EA;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.2c-.07-2.01-1.39-3.59-3.5-4.13V3h-3v1.87c-2.11.46-3.81 1.84-3.81 4.1 0 2.5 2.05 3.74 5.3 4.54 2.52.62 3.1 1.44 3.1 2.41 0 1.22-1.11 1.93-2.9 1.93-1.91 0-2.63-.99-2.7-2.28H6.5c.07 2.64 1.72 4.08 3.8 4.65V21h3v-1.87c2.19-.41 3.8-1.64 3.8-4.08 0-2.88-2.23-3.66-5.3-4.15z"/></svg>
+              </div>
+              <span class="service-text">贷款</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon" style="background: #FFF1F2; color: #E11D48;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              </div>
+              <span class="service-text">养老金融</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon" style="background: #EFF6FF; color: #1D4ED8;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-8-2h4v2h-4V4zm8 15H4V8h16v11z"/></svg>
+              </div>
+              <span class="service-text">薪酬管家</span>
+            </div>
+            <div class="service-item" onclick="bocRealApp.switchTab('assetMgmt')">
+              <div class="service-icon" style="background: #FEF3C7; color: #D97706;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3L2 12h3v8h14v-8h3L12 3zm2 11h-4v-4h4v4z"/></svg>
+              </div>
+              <span class="service-text">活钱宝</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon" style="background: #FDF2F8; color: #DB2777;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+              </div>
+              <span class="service-text">积利金</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon" style="background: #F1F5F9; color: #475569;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              </div>
+              <span class="service-text">更多</span>
+            </div>
+          </div>
+
+          <div class="news-marquee-bar">
+            <span class="news-badge">中银头条</span>
+            <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight:500;">产能爬坡+技术突破，人形机器人商业化加速</span>
+            <span style="font-weight:700; color:var(--text-muted);">&gt;</span>
+          </div>
+
+          <div class="apple-pay-banner">
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: #1D2129;">中国银行信用卡绑定Apple Pay</div>
+              <div style="font-size: 12px; color: #C8161D; margin-top: 4px; font-weight:600;">有机会享返消费金福利</div>
+            </div>
+            <div style="color:var(--boc-red);">
+              <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V8h18v10z"/></svg>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 15px; font-weight: 700;">财富精选</span>
+            <span style="font-size: 12px; color: #86909C; cursor: pointer; font-weight:600;" onclick="bocRealApp.switchTab('assetMgmt')">精选产品 速来查看 &gt;</span>
+          </div>
+
+          <div style="background: #FFF; border: 1px solid #F1F5F9; border-radius: 14px; padding: 14px; box-shadow: var(--shadow-card);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 24px; font-weight: 800; color: #DC2626;">3.94%</div>
+                <div style="font-size: 11px; color: #86909C; font-weight:600; margin-top:2px;">成立以来年化</div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 14px; font-weight: 700; color:var(--text-main);">阳光金增利稳健天天购28号...</div>
+                <div style="font-size: 11px; background: #F8FAFC; color: #475569; display: inline-block; padding: 2px 6px; border-radius: 4px; margin-top: 6px; font-weight:600;">理财 | 1.00元起购</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 2. 信用卡页面 (显示无卡真实状态) ==================== -->
+      <section class="tab-page" id="page-credit">
+        <nav class="sub-nav-bar">
+          <button class="back-btn" onclick="bocRealApp.switchTab('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <span>中银信用卡</span>
+          <div class="nav-actions">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="color:var(--text-sub);"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          </div>
+        </nav>
+
+        <!-- 暂无信用卡激活高仿真面板 -->
+        <div style="text-align: center; padding: 40px 20px; background: #FFF; margin: 12px 14px; border-radius: 18px; box-shadow: var(--shadow-card); border: 1px solid #EBF0F5;">
+          <div style="width: 72px; height: 46px; border: 2px dashed #CBD5E1; border-radius: 8px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; color: #94A3B8;">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 12H4V8h16v8z"/></svg>
+          </div>
+          <h3 style="font-size: 15px; font-weight: 700; color: #1D2129; margin-bottom: 6px;">您名下暂无激活的中行信用卡</h3>
+          <p style="font-size: 12px; color: #86909C; line-height: 1.5; margin-bottom: 20px;">快速在线申请，尊享境内外消费返现礼遇，新客户享188元立减金。</p>
+          <button class="boc-btn-primary" style="padding: 10px 20px; font-size:14px; width:auto; display:inline-block;" onclick="alert('进入中银信用卡中心，在线申请渠道')">立即申请信用卡</button>
+        </div>
+
+        <!-- 热门推荐卡片 -->
+        <div style="padding: 0 14px 14px 14px;">
+          <h4 style="font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; border-left: 3px solid var(--boc-red); padding-left: 8px;">热门信用卡推荐</h4>
+          
+          <div style="background: #FFF; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; gap: 12px; align-items: center; box-shadow: var(--shadow-card); border: 1px solid #F1F5F9;">
+            <div style="width: 70px; height: 44px; background: linear-gradient(135deg, #1E3A8A, #3B82F6); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #FFF; font-size: 8px; font-weight: 700; flex-shrink: 0; text-align:center;">长城卓隽卡</div>
+            <div style="flex: 1;">
+              <div style="font-size: 13px; font-weight: 700;">长城卓隽留学白金信用卡</div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight:600;">笔笔返现1% | 境外消费免货币转换费</div>
+            </div>
+            <span style="font-size: 12px; color: var(--boc-blue); font-weight: 700;" onclick="alert('已模拟提交申请')">去申请 &gt;</span>
+          </div>
+
+          <div style="background: #FFF; border-radius: 14px; padding: 14px; display: flex; gap: 12px; align-items: center; box-shadow: var(--shadow-card); border: 1px solid #F1F5F9;">
+            <div style="width: 70px; height: 44px; background: linear-gradient(135deg, #C8161D, #9D1117); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #FFF; font-size: 8px; font-weight: 700; flex-shrink: 0; text-align:center;">长城红卡</div>
+            <div style="flex: 1;">
+              <div style="font-size: 13px; font-weight: 700;">长城数字信用卡 (金卡)</div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight:600;">即发即用 | 绑定快捷支付最高领188元立减金</div>
+            </div>
+            <span style="font-size: 12px; color: var(--boc-blue); font-weight: 700; cursor:pointer;" onclick="alert('已模拟提交申请')">去申请 &gt;</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 3. 账户总览页 (对齐截图二 19:02) ==================== -->
+      <section class="tab-page" id="page-overview">
+        <nav class="sub-nav-bar">
+          <button class="back-btn" onclick="bocRealApp.switchTab('home')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <span>账户总览</span>
+          <div class="nav-actions">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="color:var(--text-sub);"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-8h-2V7h2v2z"/></svg>
+          </div>
+        </nav>
+
+        <div class="account-overview-container">
+          <div class="account-gold-card" onclick="bocRealApp.switchTab('assetMgmt')">
+            <div class="gold-card-header">
+              <span>总资产(折算人民币元) <span onclick="event.stopPropagation(); window.bocStore.toggleHideNumbers(); bocRealApp.renderAll();">👁️</span></span>
+              <span>ⓘ</span>
+            </div>
+            <div class="gold-card-amount">
+              <span id="overview-total-asset">15,004.28</span>
+              <span style="font-size: 18px; opacity: 0.6; margin-left:4px; font-weight:700;">↻</span>
+            </div>
+            <div class="gold-card-footer">
+              <span>昨日收益(元) <span id="overview-yesterday-profit">0.15</span> &gt;</span>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 4px 10px 4px;">
+            <span style="font-size: 14px; font-weight: 700; color:var(--text-main);">中行卡</span>
+            <span style="font-size: 16px; color: #86909C; cursor:pointer;" onclick="bocRealApp.renderAll()">↻</span>
+          </div>
+
+          <!-- 借记卡列表容器 -->
+          <div id="real-card-list-container"></div>
+
+          <div class="add-account-card-btn" onclick="bocRealApp.showAddCardModal()">
+            <div class="main-text">+ 手动添加卡/账户</div>
+            <div class="sub-text">添加您的中行账户、数字钱包</div>
+          </div>
+
+          <div class="add-account-card-btn">
+            <div class="main-text">全球账户服务</div>
+            <div class="sub-text">查看您的全球账户、资产情况</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 4. 资产管理页 (对齐截图三 19:02) ==================== -->
+      <section class="tab-page" id="page-assetMgmt">
+        <nav class="sub-nav-bar dark">
+          <button class="back-btn" onclick="bocRealApp.switchTab('overview')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <span>资产管理</span>
+          <div class="nav-actions">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-8h-2V7h2v2z"/></svg>
+          </div>
+        </nav>
+
+        <div class="asset-mgmt-header">
+          <div class="asset-reference-tip">供参考，不作为对账凭证。</div>
+          <div class="asset-title-row">
+            <span>我的资产(折算人民币元) <span onclick="window.bocStore.toggleHideNumbers(); bocRealApp.renderAll();">👁️</span></span>
+            <span class="asset-diag-pill">资产诊断 &gt;</span>
+          </div>
+          <div class="asset-timestamp" id="asset-mgmt-timestamp">2026/07/13 19:02:22 ↻</div>
+
+          <div class="asset-two-cols">
+            <div class="asset-col-item">
+              <span style="font-size: 12px; opacity: 0.8;">总资产</span>
+              <span class="val" id="asset-mgmt-total">15,004.28</span>
+            </div>
+            <div class="asset-col-item">
+              <span style="font-size: 12px; opacity: 0.8;">总负债</span>
+              <span class="val" style="color: #FFF;">0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="asset-grid-sheet">
+          <div style="text-align: right; font-size: 12px; color: #64748B; margin-bottom: 8px; font-weight:600;">⇌ 切换样式</div>
+          
+          <div class="asset-grid-2x">
+            <div class="asset-box-item">
+              <div class="label">活期存款 &gt;</div>
+              <div class="number" id="asset-demand-deposit">15,004.28</div>
+            </div>
+            <div class="asset-box-item">
+              <div class="label">结构性存款 &gt;</div>
+              <div class="number">0.00</div>
+            </div>
+            <div class="asset-box-item">
+              <div class="label">定期存款 &gt;</div>
+              <div class="number" style="font-size: 13px; font-weight: 500; color: #86909C;">您尚未持有，去看看</div>
+            </div>
+            <div class="asset-box-item">
+              <div class="label">理财 &gt;</div>
+              <div class="number" style="font-size: 13px; font-weight: 500; color: #86909C;">您尚未持有，去看看</div>
+            </div>
+            <div class="asset-box-item">
+              <div class="label">基金(含活钱宝) &gt;</div>
+              <div class="number" style="font-size: 13px; font-weight: 500; color: #86909C;">您尚未持有，去看看</div>
+            </div>
+            <div class="asset-box-item">
+              <div class="label">代销资管 &gt;</div>
+              <div class="number" style="font-size: 13px; font-weight: 500; color: #86909C;">您尚未持有，去看看</div>
+            </div>
+            <div class="asset-box-item">
+              <div class="label">柜台债券 &gt;</div>
+              <div class="number" style="font-size: 13px; font-weight: 500; color: #86909C;">您尚未持有，去看看</div>
+            </div>
+            <div class="asset-box-item">
+              <div class="label">储蓄国债 &gt;</div>
+              <div class="number" style="font-size: 13px; font-weight: 500; color: #86909C;">您尚未持有，去看看</div>
+            </div>
+          </div>
+
+          <div style="text-align: center; color: #94A3B8; font-size: 12px; margin-top: 24px; font-weight:700;">展开 v</div>
+        </div>
+      </section>
+
+      <!-- ==================== 5. 生活服务页 (水电电费、生活缴费特惠频道) ==================== -->
+      <section class="tab-page" id="page-life">
+        <nav class="sub-nav-bar">
+          <div class="life-location-tag">
+            <svg class="icon-svg" style="color:var(--boc-red);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>北京市</span>
+          </div>
+          <span style="font-weight:700;">中银便民生活</span>
+          <div></div>
+        </nav>
+
+        <div style="padding: 12px 14px;">
+          <!-- 8大生活分类 -->
+          <div style="background:#FFF; border-radius:16px; padding:16px; display:grid; grid-template-columns:repeat(4, 1fr); gap:16px 8px; text-align:center; margin-bottom:14px; box-shadow:var(--shadow-card);">
+            <div>
+              <div style="color:#3B82F6; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">生活缴费</div>
+            </div>
+            <div>
+              <div style="color:#10B981; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">星巴克优惠</div>
+            </div>
+            <div>
+              <div style="color:#EF4444; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">猫眼影票</div>
+            </div>
+            <div>
+              <div style="color:#F59E0B; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">手机充值</div>
+            </div>
+            <div>
+              <div style="color:#8B5CF6; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-8h-2V7h2v2z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">美食餐饮</div>
+            </div>
+            <div>
+              <div style="color:#EC4899; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-8h-2V7h2v2z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">健康体检</div>
+            </div>
+            <div>
+              <div style="color:#3B82F6; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-8h-2V7h2v2z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">政务社保</div>
+            </div>
+            <div>
+              <div style="color:#6B7280; font-size:22px; display:flex; justify-content:center;">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              </div>
+              <div style="font-size:12px; margin-top:6px; color:var(--text-main); font-weight:600;">更多</div>
+            </div>
+          </div>
+
+          <!-- 便民生活缴费入口 -->
+          <div style="background:#FFF; border-radius:16px; padding:16px; margin-bottom:14px; box-shadow:var(--shadow-card);">
+            <h4 style="font-size:14px; font-weight:700; color:var(--text-main); margin-bottom:12px; border-left:3px solid var(--boc-red); padding-left:8px;">本地缴费服务</h4>
+            <div style="display:flex; gap:12px; margin-top:10px;">
+              <div style="flex:1; background:#EFF6FF; padding:14px; border-radius:12px; text-align:center; cursor:pointer;" onclick="alert('即将拉取北京市电费账单')">
+                <span style="font-size:20px; color:#2563EB;">⚡</span>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">电费缴纳</div>
+              </div>
+              <div style="flex:1; background:#F0FDF4; padding:14px; border-radius:12px; text-align:center; cursor:pointer;" onclick="alert('即将拉取北京市水费账单')">
+                <span style="font-size:20px; color:#16A34A;">💧</span>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">水费缴纳</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 中行特惠专区 -->
+          <div style="background:#FFF; border-radius:16px; padding:16px; box-shadow:var(--shadow-card);">
+            <h4 style="font-size:14px; font-weight:700; color:var(--text-main); margin-bottom:12px; border-left:3px solid var(--boc-red); padding-left:8px;">中银特惠头条</h4>
+            <div style="border-bottom:1px solid #F1F5F9; padding:10px 0; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:13px; font-weight:700;">【北京尊享】星巴克大杯美式立减15元</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">仅限中行信用卡绑定Apple Pay支付</div>
+              </div>
+              <span style="background:var(--boc-red); color:#FFF; font-size:11px; font-weight:700; padding:4px 8px; border-radius:6px; cursor:pointer;">去抢购</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 6. 我的中心 (对齐截图四 19:02) ==================== -->
+      <section class="tab-page" id="page-mine">
+        <header class="mine-header-red">
+          <div class="mine-top-bar">
+            <span style="font-size: 14px; cursor: pointer; display:flex; align-items:center; gap:4px;" onclick="bocRealApp.switchTab('home')">
+              <svg class="icon-svg" style="width:16px; height:16px;" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+              退出
+            </span>
+            <div class="mine-search-input">
+              <span>🔍 请输入搜索</span>
+              <span>搜索</span>
+            </div>
+            <div style="display: flex; gap: 14px; align-items:center;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.57a1 1 0 0 0-1.01.24l-2.17 2.17a15.145 15.145 0 0 1-6.59-6.59l2.17-2.17a1 1 0 0 0 .24-1.01c-.38-1.11-.57-2.3-.57-3.53 0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+              <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            </div>
+          </div>
+
+          <div class="mine-profile-row">
+            <div class="mascot-avatar-wrap" id="secret-mascot-trigger">
+              <svg viewBox="0 0 100 100" style="width: 48px; height: 48px;">
+                <circle cx="50" cy="50" r="45" fill="#FFE082" stroke="#FFFFFF" stroke-width="3"/>
+                <circle cx="35" cy="45" r="5" fill="#3D2D1B"/>
+                <circle cx="65" cy="45" r="5" fill="#3D2D1B"/>
+                <path d="M 35 65 Q 50 80 65 65" fill="none" stroke="#3D2D1B" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="25" cy="55" r="4" fill="#FF8A80"/>
+                <circle cx="75" cy="55" r="4" fill="#FF8A80"/>
+              </svg>
+              <span class="mascot-setting-badge">设置</span>
+            </div>
+            <div>
+              <div style="font-size: 18px; font-weight: 700;" id="mine-display-name">晚上好，孙*宇</div>
+              <div style="font-size: 11px; opacity: 0.85; margin-top: 2px;" id="mine-last-login">上次登录:2026/07/10 01:10:38</div>
+            </div>
+          </div>
+
+          <div class="vip-ribbon-card">
+            <span>🏅 大众客户</span>
+            <span>权益中心 &gt;</span>
+          </div>
+        </header>
+
+        <div class="mine-white-body">
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #475569; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span style="background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-weight: 700;">待办</span>
+            <span>近期暂无事项，点击查看更多</span>
+          </div>
+
+          <div class="mine-4icons-card">
+            <div onclick="bocRealApp.switchTab('overview')" style="cursor: pointer;">
+              <div style="font-size: 20px; font-weight: 800; color: #1D2129;">1</div>
+              <div style="font-size: 12px; margin-top: 6px; font-weight:600;">我的账户</div>
+            </div>
+            <div>
+              <div style="color:#C59A47; display:flex; justify-content:center;">
+                <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+              </div>
+              <div style="font-size: 12px; margin-top: 6px; font-weight:600;">我的权益</div>
+            </div>
+            <div>
+              <div style="color:#E0A800; display:flex; justify-content:center;">
+                <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+              </div>
+              <div style="font-size: 12px; margin-top: 6px; font-weight:600;">我的福气值</div>
+            </div>
+            <div>
+              <div style="color:#3B82F6; display:flex; justify-content:center;">
+                <svg class="icon-svg-lg" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+              </div>
+              <div style="font-size: 12px; margin-top: 6px; font-weight:600;">我的待办</div>
+            </div>
+          </div>
+
+          <div class="mine-asset-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700;">
+              <span>我的资产 <span onclick="window.bocStore.toggleHideNumbers(); bocRealApp.renderAll();" style="cursor:pointer;">👁️</span></span>
+            </div>
+            <div class="asset-wave-inner" onclick="bocRealApp.switchTab('assetMgmt')" style="cursor: pointer;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; color: #86909C; font-weight:600;">
+                <span>资产 &gt; <span style="color: #C59A47; font-weight: 700;">资产诊断</span></span>
+                <span>昨日收益 &gt;</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 22px; font-weight: 800; margin-top: 10px;">
+                <span id="mine-asset-val">15,004.28</span>
+                <span id="mine-profit-val">0.15</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mine-asset-card" onclick="bocRealApp.switchTab('history')" style="cursor: pointer;">
+            <div style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">本月收支 &gt;</div>
+            <div class="asset-wave-inner">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; color: #86909C; font-weight:600;">
+                <span>收入</span>
+                <span>支出</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; margin-top: 8px;">
+                <span id="tx-month-income" style="color: #DC2626;">¥ 15,004.28</span>
+                <span id="tx-month-expense" style="color: #1D2129;">¥ 0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 7. 交易明细查询与管理页 ==================== -->
+      <section class="tab-page" id="page-history">
+        <nav class="sub-nav-bar">
+          <button class="back-btn" onclick="bocRealApp.switchTab('overview')">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <span>交易明细</span>
+          <div class="nav-actions">
+            <span style="font-size: 13px; color: var(--boc-red); cursor: pointer; font-weight:700;" onclick="bocRealApp.showAddTxModal()">+ 新增交易</span>
+          </div>
+        </nav>
+
+        <div style="padding: 12px 14px;">
+          <!-- 筛选说明 -->
+          <div style="background:#FFF; border-radius:10px; padding:10px 12px; margin-bottom:10px; font-size:12px; color:var(--text-sub); display:flex; justify-content:space-between; align-items:center;">
+            <span>仅显示 2026 年流水数据</span>
+            <span style="font-weight:700; color:var(--boc-red);">2026年</span>
+          </div>
+          <div id="tx-main-list"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 底部 5 大栏目导航 (对齐截图四/五) -->
+    <nav class="bottom-tab-bar">
+      <button class="tab-btn active" data-tab="home">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span class="tab-text">首页</span>
+      </button>
+      <button class="tab-btn" data-tab="credit">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 12H4V8h16v8z"/></svg>
+        <span class="tab-text">信用卡</span>
+      </button>
+      <button class="tab-btn" data-tab="assetMgmt">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+        <span class="tab-text">财富</span>
+      </button>
+      <button class="tab-btn" data-tab="life">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-8-2h4v2h-4V4zm8 15H4V8h16v11z"/></svg>
+        <span class="tab-text">生活</span>
+      </button>
+      <button class="tab-btn" data-tab="mine">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span class="tab-text">我的</span>
+      </button>
+    </nav>
+
+    <!-- 增删改查/回单通用弹窗 -->
+    <div class="modal-overlay" id="common-modal">
+      <div class="modal-sheet">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="font-size: 16px; font-weight: 700;" id="modal-header-title">编辑</h3>
+          <button style="border: none; background: #F1F5F9; width: 28px; height: 28px; border-radius: 50%; cursor: pointer;" onclick="bocRealApp.closeModal()">✕</button>
+        </div>
+        <div id="modal-body-content"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+/**
+ * Bank of China (BOC) UI Simulator - Core Data Store (15000+ Balance & 2026 Transactions)
+ * 对齐真实的中国银行截图规范与自定义数据故事
+ */
+
+const DEFAULT_BOC_DATA = {
+  profile: {
+    name: "孙*宇",
+    greeting: "晚上好",
+    lastLogin: "2026/07/10 01:10:38",
+    avatarMascot: "boc-doll",
+    vipLevel: "大众客户",
+    totalAsset: 15004.28,
+    yesterdayProfit: "0.15",
+    totalLiability: 0.00,
+    demandDeposit: 15004.28,
+    structuredDeposit: 0.00,
+    hideNumbers: false
+  },
+  cards: [
+    {
+      id: "card-debit-101",
+      type: "debit",
+      typeName: "长城电子借记卡 (I类账户)",
+      cardNumber: "6217 ****** 4548",
+      fullCardNumber: "6217 0088 1928 4548",
+      balance: 15004.28,
+      currency: "人民币元",
+      theme: "boc-debit-real",
+      status: "正常",
+      bankName: "中国银行"
+    }
+  ],
+  transactions: [
+    {
+      id: "tx-20260224-01",
+      title: "跨行汇入-转账收入",
+      type: "income",
+      amount: 7000.00,
+      datetime: "2026-02-24 14:32:18",
+      counterparty: "孙海军",
+      cardId: "card-debit-101",
+      balanceAfter: 15004.28,
+      serialNo: "BOC202602241432188901"
+    },
+    {
+      id: "tx-20260218-02",
+      title: "快捷支付收入-支付宝提现",
+      type: "income",
+      amount: 8000.00,
+      datetime: "2026-02-18 09:20:05",
+      counterparty: "支付宝(中国)网络技术有限公司",
+      cardId: "card-debit-101",
+      balanceAfter: 8004.28,
+      serialNo: "BOC202602180920053312"
+    },
+    {
+      id: "tx-20260101-03",
+      title: "个人活期存款结息",
+      type: "income",
+      amount: 4.28,
+      datetime: "2026-01-01 06:00:00",
+      counterparty: "中国银行北京分行清算中心",
+      cardId: "card-debit-101",
+      balanceAfter: 4.28,
+      serialNo: "BOC202601010600000102"
+    }
+  ]
+};
+
+const STORAGE_KEY = 'boc_simulator_real_v5';
+
+class BOCStore {
+  constructor() {
+    this.data = this.load();
+  }
+
+  load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        return JSON.parse(raw);
+      }
+    } catch (e) {}
+    return JSON.parse(JSON.stringify(DEFAULT_BOC_DATA));
+  }
+
+  save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+    } catch (e) {}
+  }
+
+  getData() {
+    return this.data;
+  }
+
+  toggleHideNumbers() {
+    this.data.profile.hideNumbers = !this.data.profile.hideNumbers;
+    this.save();
+    return this.data.profile.hideNumbers;
+  }
+
+  updateProfile(profileData) {
+    this.data.profile = { ...this.data.profile, ...profileData };
+    this.save();
+  }
+
+  addCard(card) {
+    const newCard = {
+      id: "card-" + Date.now(),
+      type: card.type || "debit",
+      typeName: card.typeName || "长城电子借记卡 (I类账户)",
+      cardNumber: card.cardNumber || "6217 ****** " + Math.floor(1000 + Math.random() * 8999),
+      fullCardNumber: card.fullCardNumber || "6217 0088 8888 8888",
+      balance: parseFloat(card.balance) || 0.00,
+      currency: "人民币元",
+      theme: card.theme || "boc-debit-real",
+      status: "正常",
+      bankName: "中国银行"
+    };
+    this.data.cards.push(newCard);
+    this.recalculateTotalAsset();
+    this.save();
+    return newCard;
+  }
+
+  updateCard(cardId, updateData) {
+    const idx = this.data.cards.findIndex(c => c.id === cardId);
+    if (idx !== -1) {
+      this.data.cards[idx] = { ...this.data.cards[idx], ...updateData };
+      this.recalculateTotalAsset();
+      this.save();
+    }
+  }
+
+  deleteCard(cardId) {
+    this.data.cards = this.data.cards.filter(c => c.id !== cardId);
+    this.recalculateTotalAsset();
+    this.save();
+  }
+
+  addTransaction(tx) {
+    const amountNum = parseFloat(tx.amount) || 0;
+    const isIncome = tx.type === 'income' || amountNum > 0;
+    const finalAmount = isIncome ? Math.abs(amountNum) : -Math.abs(amountNum);
+
+    const targetCard = this.data.cards.find(c => c.id === (tx.cardId || (this.data.cards[0] && this.data.cards[0].id)));
+    let balanceAfter = targetCard ? targetCard.balance + finalAmount : finalAmount;
+
+    if (targetCard) {
+      targetCard.balance = balanceAfter;
+    }
+
+    const newTx = {
+      id: "tx-" + Date.now(),
+      title: tx.title || (isIncome ? "转入-银联跨行" : "快捷消费-支付支出"),
+      type: isIncome ? "income" : "expense",
+      amount: finalAmount,
+      datetime: tx.datetime || new Date().toISOString().replace('T', ' ').substring(0, 19),
+      counterparty: tx.counterparty || "中国银行特约商户",
+      cardId: targetCard ? targetCard.id : "",
+      balanceAfter: balanceAfter,
+      serialNo: "BOC" + Date.now()
+    };
+
+    this.data.transactions.unshift(newTx);
+    this.recalculateTotalAsset();
+    this.save();
+    return newTx;
+  }
+
+  updateTransaction(txId, updateData) {
+    const idx = this.data.transactions.findIndex(t => t.id === txId);
+    if (idx !== -1) {
+      this.data.transactions[idx] = { ...this.data.transactions[idx], ...updateData };
+      this.save();
+    }
+  }
+
+  deleteTransaction(txId) {
+    this.data.transactions = this.data.transactions.filter(t => t.id !== txId);
+    this.save();
+  }
+
+  recalculateTotalAsset() {
+    let sum = 0;
+    this.data.cards.forEach(c => {
+      if (c.type !== 'credit') {
+        sum += parseFloat(c.balance) || 0;
+      }
+    });
+    this.data.profile.totalAsset = sum;
+    this.data.profile.demandDeposit = sum;
+  }
+
+  resetToDefault() {
+    this.data = JSON.parse(JSON.stringify(DEFAULT_BOC_DATA));
+    this.save();
+    return this.data;
+  }
+}
+
+window.bocStore = new BOCStore();
+
+/**
+ * Bank of China (BOC) Real App Controller - V4
+ * 实现完整页面交互、卡片及流水管理 (CRUD)、过滤 2026 年明细
+ */
+
+class BOCRealAppController {
+  constructor() {
+    this.currentTab = 'home';
+    this.txFilter = 'all';
+    this.secretClickCount = 0;
+    this.secretTimer = null;
+    this.init();
+  }
+
+  init() {
+    this.bindEvents();
+    this.renderAll();
+  }
+
+  bindEvents() {
+    // 底部 5 大原生 Tab 切换
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabName = btn.getAttribute('data-tab');
+        this.switchTab(tabName);
+      });
+    });
+
+    // 隐蔽触发彩蛋：连续三次点击 Mine 页面黄娃娃头像 或 首页登录图标
+    const secretTriggers = ['secret-mascot-trigger', 'secret-login-trigger'];
+    secretTriggers.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', () => {
+          this.secretClickCount++;
+          clearTimeout(this.secretTimer);
+          this.secretTimer = setTimeout(() => {
+            this.secretClickCount = 0;
+          }, 1200);
+
+          if (this.secretClickCount >= 3) {
+            this.secretClickCount = 0;
+            this.openProfileEditorModal();
+          }
+        });
+      }
+    });
+  }
+
+  switchTab(tabName) {
+    this.currentTab = tabName;
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      if (b.getAttribute('data-tab') === tabName) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('.tab-page').forEach(page => {
+      if (page.id === `page-${tabName}`) {
+        page.classList.add('active');
+      } else {
+        page.classList.remove('active');
+      }
+    });
+
+    this.renderAll();
+  }
+
+  formatMoney(num) {
+    if (typeof num !== 'number') return '0.00';
+    return num.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  renderAll() {
+    const data = window.bocStore.getData();
+    this.renderHome(data);
+    this.renderAccountOverview(data);
+    this.renderAssetManagement(data);
+    this.renderMine(data);
+    this.renderTransactions(data);
+  }
+
+  renderHome(data) {
+    // 首页无需太多额外动态渲染，基础信息自适应即可
+  }
+
+  // === 账户总览页 ===
+  renderAccountOverview(data) {
+    const totalEl = document.getElementById('overview-total-asset');
+    const profitEl = document.getElementById('overview-yesterday-profit');
+    const container = document.getElementById('real-card-list-container');
+
+    if (totalEl) {
+      totalEl.textContent = data.profile.hideNumbers ? '******' : this.formatMoney(data.profile.totalAsset);
+    }
+    if (profitEl) {
+      profitEl.textContent = data.profile.hideNumbers ? '**' : (data.profile.yesterdayProfit || '--');
+    }
+
+    if (!container) return;
+
+    container.innerHTML = data.cards.map(card => {
+      const thumbClass = card.type === 'credit' ? 'gold' : 'blue';
+      const balDisplay = data.profile.hideNumbers ? '******' : this.formatMoney(card.balance);
+
+      return `
+        <div class="boc-card-real-item" onclick="bocRealApp.showEditCardModal('${card.id}')">
+          <div class="real-card-top">
+            <div class="real-card-thumb ${thumbClass}">
+              <span>中国银行<br>BOC</span>
+            </div>
+            <div>
+              <div class="real-card-no">${card.cardNumber}</div>
+              <div class="real-card-type">${card.typeName}</div>
+            </div>
+          </div>
+          <div class="real-card-balance-row">
+            <span style="color: #64748B;">账面余额</span>
+            <span style="font-weight: 700; color: #1E293B;">人民币元 ${balDisplay}</span>
+          </div>
+          <div class="real-card-actions" onclick="event.stopPropagation();">
+            <div class="action-link" onclick="bocRealApp.openTxPage('${card.id}')">交易明细</div>
+            <div class="action-link" style="color: #1A6CDE;" onclick="alert('模拟转账功能：从卡号 ${card.cardNumber} 汇出')">转账</div>
+            <div class="action-link" onclick="alert('模拟进入理财频道')">买理财</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // === 资产管理页 ===
+  renderAssetManagement(data) {
+    const totalEl = document.getElementById('asset-mgmt-total');
+    const timeEl = document.getElementById('asset-mgmt-timestamp');
+    const demandEl = document.getElementById('asset-demand-deposit');
+
+    if (totalEl) totalEl.textContent = data.profile.hideNumbers ? '******' : this.formatMoney(data.profile.totalAsset);
+    if (demandEl) demandEl.textContent = data.profile.hideNumbers ? '******' : this.formatMoney(data.profile.totalAsset);
+
+    if (timeEl) {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const dd = String(now.getDate()).padStart(2, '0');
+      const hh = String(now.getHours()).padStart(2, '0');
+      const min = String(now.getMinutes()).padStart(2, '0');
+      const ss = String(now.getSeconds()).padStart(2, '0');
+      timeEl.textContent = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss} ↻`;
+    }
+  }
+
+  // === 我的页 ===
+  renderMine(data) {
+    const nameEl = document.getElementById('mine-display-name');
+    const loginEl = document.getElementById('mine-last-login');
+    const assetEl = document.getElementById('mine-asset-val');
+    const profitEl = document.getElementById('mine-profit-val');
+
+    if (nameEl) nameEl.textContent = `${data.profile.greeting || '晚上好'}，${data.profile.name || '孙*宇'}`;
+    if (loginEl) loginEl.textContent = `上次登录:${data.profile.lastLogin || '2026/07/10 01:10:38'}`;
+    if (assetEl) assetEl.textContent = data.profile.hideNumbers ? '******' : this.formatMoney(data.profile.totalAsset);
+    if (profitEl) profitEl.textContent = data.profile.hideNumbers ? '******' : (data.profile.yesterdayProfit || '--');
+  }
+
+  // === 交易明细与 2026 年数据过滤 ===
+  renderTransactions() {
+    const data = window.bocStore.getData();
+    const listEl = document.getElementById('tx-main-list');
+    const incomeEl = document.getElementById('tx-month-income');
+    const expenseEl = document.getElementById('tx-month-expense');
+
+    if (!listEl) return;
+
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    // 仅展示 2026 年的数据明细
+    const filtered2026 = data.transactions.filter(t => {
+      return t.datetime.startsWith('2026');
+    });
+
+    filtered2026.forEach(t => {
+      if (t.type === 'income') totalIncome += t.amount;
+      if (t.type === 'expense') totalExpense += Math.abs(t.amount);
+    });
+
+    if (incomeEl) incomeEl.textContent = `¥ ${this.formatMoney(totalIncome)}`;
+    if (expenseEl) expenseEl.textContent = `¥ ${this.formatMoney(totalExpense)}`;
+
+    if (filtered2026.length === 0) {
+      listEl.innerHTML = `<div style="text-align:center; padding: 40px; color: #86909C;">暂无 2026 年交易明细</div>`;
+      return;
+    }
+
+    listEl.innerHTML = filtered2026.map(tx => {
+      const isIncome = tx.type === 'income';
+      const colorClass = isIncome ? '#DC2626' : '#1D2129';
+      const prefix = isIncome ? '+ ' : '- ';
+
+      return `
+        <div style="background: #FFF; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03);" onclick="bocRealApp.showReceiptModal('${tx.id}')">
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #1D2129;">${tx.title}</div>
+            <div style="font-size: 11px; color: #86909C; margin-top: 3px; font-weight:600;">${tx.datetime}</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 15px; font-weight: 700; color: ${colorClass};">${prefix}¥ ${this.formatMoney(Math.abs(tx.amount))}</div>
+            <div style="font-size: 11px; color: #86909C; font-weight:600; margin-top:2px;">余额 ${data.profile.hideNumbers ? '******' : this.formatMoney(tx.balanceAfter)}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  openTxPage(cardId) {
+    this.switchTab('history');
+  }
+
+  // === 银行卡管理弹窗 ===
+  showAddCardModal(cardId = null) {
+    const data = window.bocStore.getData();
+    const card = cardId ? data.cards.find(c => c.id === cardId) : null;
+    const isEdit = !!card;
+
+    const modal = document.getElementById('common-modal');
+    const titleEl = document.getElementById('modal-header-title');
+    const bodyEl = document.getElementById('modal-body-content');
+
+    titleEl.textContent = isEdit ? '修改 / 删除中行卡' : '+ 手动添加卡 / 账户';
+
+    bodyEl.innerHTML = `
+      <div class="form-group">
+        <label>账户类型与名称</label>
+        <input type="text" id="card-type-name" class="form-input" value="${isEdit ? card.typeName : '长城电子借记卡 (I类账户)'}">
+      </div>
+      <div class="form-group">
+        <label>脱敏展示卡号 (例如：6217 ****** 4548)</label>
+        <input type="text" id="card-display-num" class="form-input" value="${isEdit ? card.cardNumber : '6217 ****** 4548'}">
+      </div>
+      <div class="form-group">
+        <label>账面余额 (人民币元)</label>
+        <input type="number" step="0.01" id="card-bal" class="form-input" value="${isEdit ? card.balance : '15004.28'}">
+      </div>
+      <div class="btn-row">
+        ${isEdit ? `<button class="boc-btn-danger" onclick="bocRealApp.deleteCardAction('${card.id}')">删除此卡</button>` : ''}
+        <button class="boc-btn-primary" onclick="bocRealApp.saveCardAction('${card ? card.id : ''}')">保存生效</button>
+      </div>
+    `;
+
+    modal.classList.add('active');
+  }
+
+  showEditCardModal(cardId) {
+    this.showAddCardModal(cardId);
+  }
+
+  saveCardAction(cardId) {
+    const typeName = document.getElementById('card-type-name').value;
+    const cardNumber = document.getElementById('card-display-num').value;
+    const balance = parseFloat(document.getElementById('card-bal').value) || 0;
+
+    if (cardId) {
+      window.bocStore.updateCard(cardId, { typeName, cardNumber, balance });
+    } else {
+      window.bocStore.addCard({ typeName, cardNumber, balance });
+    }
+
+    this.closeModal();
+    this.renderAll();
+  }
+
+  deleteCardAction(cardId) {
+    if (confirm("确定要删除这张中行卡吗？")) {
+      window.bocStore.deleteCard(cardId);
+      this.closeModal();
+      this.renderAll();
+    }
+  }
+
+  // === 交易明细管理弹窗 ===
+  showAddTxModal(txId = null) {
+    const data = window.bocStore.getData();
+    const tx = txId ? data.transactions.find(t => t.id === txId) : null;
+    const isEdit = !!tx;
+
+    const modal = document.getElementById('common-modal');
+    const titleEl = document.getElementById('modal-header-title');
+    const bodyEl = document.getElementById('modal-body-content');
+
+    titleEl.textContent = isEdit ? '修改交易明细' : '+ 新增收支明细流水';
+
+    bodyEl.innerHTML = `
+      <div class="form-group">
+        <label>收支类型</label>
+        <select id="tx-type-sel" class="form-input">
+          <option value="income" ${isEdit && tx.type === 'income' ? 'selected' : ''}>收入 (+ 人民币)</option>
+          <option value="expense" ${isEdit && tx.type === 'expense' ? 'selected' : ''}>支出 (- 人民币)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>交易描述标题</label>
+        <input type="text" id="tx-title-inp" class="form-input" value="${isEdit ? tx.title : '转账收入-跨行汇入'}">
+      </div>
+      <div class="form-group">
+        <label>金额 (元)</label>
+        <input type="number" step="0.01" id="tx-amount-inp" class="form-input" value="${isEdit ? Math.abs(tx.amount) : '1000.00'}">
+      </div>
+      <div class="form-group">
+        <label>对方户名 / 商户名</label>
+        <input type="text" id="tx-counter-inp" class="form-input" value="${isEdit ? tx.counterparty : '孙海军'}">
+      </div>
+      <div class="btn-row">
+        ${isEdit ? `<button class="boc-btn-danger" onclick="bocRealApp.deleteTxAction('${tx.id}')">删除此流水</button>` : ''}
+        <button class="boc-btn-primary" onclick="bocRealApp.saveTxAction('${tx ? tx.id : ''}')">确定保存</button>
+      </div>
+    `;
+
+    modal.classList.add('active');
+  }
+
+  saveTxAction(txId) {
+    const type = document.getElementById('tx-type-sel').value;
+    const title = document.getElementById('tx-title-inp').value;
+    const amount = parseFloat(document.getElementById('tx-amount-inp').value) || 0;
+    const counterparty = document.getElementById('tx-counter-inp').value;
+
+    if (txId) {
+      const finalAmount = type === 'income' ? Math.abs(amount) : -Math.abs(amount);
+      window.bocStore.updateTransaction(txId, { type, title, amount: finalAmount, counterparty });
+    } else {
+      window.bocStore.addTransaction({ type, title, amount, counterparty });
+    }
+
+    this.closeModal();
+    this.renderAll();
+  }
+
+  deleteTxAction(txId) {
+    if (confirm("确定要删除这条收支流水吗？")) {
+      window.bocStore.deleteTransaction(txId);
+      this.closeModal();
+      this.renderAll();
+    }
+  }
+
+  // === 电子回单查看 ===
+  showReceiptModal(txId) {
+    const data = window.bocStore.getData();
+    const tx = data.transactions.find(t => t.id === txId);
+    if (!tx) return;
+
+    const modal = document.getElementById('common-modal');
+    const titleEl = document.getElementById('modal-header-title');
+    const bodyEl = document.getElementById('modal-body-content');
+
+    titleEl.textContent = '中国银行电子交易流水单';
+    bodyEl.innerHTML = `
+      <div style="text-align: center; border-bottom: 1px dashed #E2E8F0; padding-bottom: 16px; margin-bottom: 16px;">
+        <div style="font-size: 12px; color: #64748B;">交易凭据金额</div>
+        <div style="font-size: 30px; font-weight: 800; color: ${tx.type === 'income' ? '#DC2626' : '#1E293B'}; margin-top: 4px;">
+          ${tx.type === 'income' ? '+' : '-'} ¥ ${this.formatMoney(Math.abs(tx.amount))}
+        </div>
+        <div style="font-size: 12px; color: #16A34A; margin-top: 4px; font-weight:600;">● 交易成功 (中国银行核心结算系统)</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: #64748B;">摘要说明</span>
+          <span style="font-weight: 600;">${tx.title}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: #64748B;">对方户名/商户</span>
+          <span style="font-weight: 600;">${tx.counterparty || '中国银行'}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: #64748B;">记账时间</span>
+          <span>${tx.datetime}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: #64748B;">凭证流水单号</span>
+          <span style="font-family: monospace;">${tx.serialNo}</span>
+        </div>
+      </div>
+      <div class="receipt-seal">
+        <span>中国银行</span>
+        <span style="font-size: 8px;">电子凭条专用章</span>
+      </div>
+      <div class="btn-row" style="margin-top: 14px;">
+        <button class="boc-btn-secondary" onclick="bocRealApp.showAddTxModal('${tx.id}')">编辑修改</button>
+        <button class="boc-btn-danger" onclick="bocRealApp.deleteTxAction('${tx.id}')">删除此项</button>
+      </div>
+    `;
+
+    modal.classList.add('active');
+  }
+
+  // === 客户参数设定 ===
+  openProfileEditorModal() {
+    const data = window.bocStore.getData();
+    const modal = document.getElementById('common-modal');
+    const titleEl = document.getElementById('modal-header-title');
+    const bodyEl = document.getElementById('modal-body-content');
+
+    titleEl.textContent = '设定中行客户及初始参数';
+    bodyEl.innerHTML = `
+      <div class="form-group">
+        <label>客户姓名 / 脱敏称谓</label>
+        <input type="text" id="prof-name" class="form-input" value="${data.profile.name || '孙*宇'}">
+      </div>
+      <div class="form-group">
+        <label>问候语</label>
+        <input type="text" id="prof-greet" class="form-input" value="${data.profile.greeting || '晚上好'}">
+      </div>
+      <div class="form-group">
+        <label>上次登录提示</label>
+        <input type="text" id="prof-login" class="form-input" value="${data.profile.lastLogin || '2026/07/10 01:10:38'}">
+      </div>
+      <div class="form-group">
+        <label>总资产余额 (元)</label>
+        <input type="number" step="0.01" id="prof-total" class="form-input" value="${data.profile.totalAsset}">
+      </div>
+      <div class="btn-row">
+        <button class="boc-btn-primary" onclick="bocRealApp.saveProfileChanges()">保存更改</button>
+      </div>
+    `;
+
+    modal.classList.add('active');
+  }
+
+  saveProfileChanges() {
+    const name = document.getElementById('prof-name').value;
+    const greeting = document.getElementById('prof-greet').value;
+    const lastLogin = document.getElementById('prof-login').value;
+    const totalAsset = parseFloat(document.getElementById('prof-total').value);
+
+    window.bocStore.updateProfile({
+      name,
+      greeting,
+      lastLogin,
+      totalAsset: isNaN(totalAsset) ? 15004.28 : totalAsset,
+      demandDeposit: isNaN(totalAsset) ? 15004.28 : totalAsset
+    });
+
+    this.closeModal();
+    this.renderAll();
+  }
+
+  closeModal() {
+    const modal = document.getElementById('common-modal');
+    if (modal) modal.classList.remove('active');
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  window.bocRealApp = new BOCRealAppController();
+});
+
+</script>
+</body>
+</html>
