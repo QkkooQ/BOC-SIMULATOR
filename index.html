@@ -62,12 +62,14 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* 桌面预览框，在手机或 iPhone Safari (添加到主屏幕) 模式下为满屏原生形态 */
 .app-viewport {
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   max-width: 430px;
   max-height: 932px;
   background-color: var(--bg-app);
@@ -1457,6 +1459,10 @@ body {
             <span>仅显示 2026 年流水数据</span>
             <span style="font-weight:700; color:var(--boc-red);">2026年</span>
           </div>
+          <div style="background:#FFF; border-radius:10px; padding:10px 12px; margin-bottom:10px; font-size:12px; color:var(--text-sub); display:flex; justify-content:space-between; align-items:center; font-weight:600;">
+            <span>本月收入: <span style="color:#DC2626;" id="tx-hist-income">¥ 0.00</span></span>
+            <span>本月支出: <span style="color:#1D2129;" id="tx-hist-expense">¥ 0.00</span></span>
+          </div>
           <div id="tx-main-list"></div>
         </div>
       </section>
@@ -1576,6 +1582,7 @@ const STORAGE_KEY = 'boc_simulator_real_v5';
 class BOCStore {
   constructor() {
     this.data = this.load();
+    this.recalculateRunningBalances();
   }
 
   load() {
@@ -1624,6 +1631,7 @@ class BOCStore {
     };
     this.data.cards.push(newCard);
     this.recalculateTotalAsset();
+    this.recalculateRunningBalances();
     this.save();
     return newCard;
   }
@@ -1633,6 +1641,7 @@ class BOCStore {
     if (idx !== -1) {
       this.data.cards[idx] = { ...this.data.cards[idx], ...updateData };
       this.recalculateTotalAsset();
+      this.recalculateRunningBalances();
       this.save();
     }
   }
@@ -1640,35 +1649,35 @@ class BOCStore {
   deleteCard(cardId) {
     this.data.cards = this.data.cards.filter(c => c.id !== cardId);
     this.recalculateTotalAsset();
+    this.recalculateRunningBalances();
     this.save();
   }
 
   addTransaction(tx) {
     const amountNum = parseFloat(tx.amount) || 0;
-    const isIncome = tx.type === 'income' || amountNum > 0;
+    const isIncome = tx.type === 'income';
     const finalAmount = isIncome ? Math.abs(amountNum) : -Math.abs(amountNum);
 
     const targetCard = this.data.cards.find(c => c.id === (tx.cardId || (this.data.cards[0] && this.data.cards[0].id)));
-    let balanceAfter = targetCard ? targetCard.balance + finalAmount : finalAmount;
-
     if (targetCard) {
-      targetCard.balance = balanceAfter;
+      targetCard.balance += finalAmount;
     }
 
     const newTx = {
       id: "tx-" + Date.now(),
-      title: tx.title || (isIncome ? "转入-银联跨行" : "快捷消费-支付支出"),
+      title: tx.title || (isIncome ? "跨行汇入-转账收入" : "快捷支付-消费支出"),
       type: isIncome ? "income" : "expense",
       amount: finalAmount,
       datetime: tx.datetime || new Date().toISOString().replace('T', ' ').substring(0, 19),
       counterparty: tx.counterparty || "中国银行特约商户",
       cardId: targetCard ? targetCard.id : "",
-      balanceAfter: balanceAfter,
+      balanceAfter: targetCard ? targetCard.balance : finalAmount,
       serialNo: "BOC" + Date.now()
     };
 
     this.data.transactions.unshift(newTx);
     this.recalculateTotalAsset();
+    this.recalculateRunningBalances();
     this.save();
     return newTx;
   }
@@ -1676,14 +1685,64 @@ class BOCStore {
   updateTransaction(txId, updateData) {
     const idx = this.data.transactions.findIndex(t => t.id === txId);
     if (idx !== -1) {
-      this.data.transactions[idx] = { ...this.data.transactions[idx], ...updateData };
+      const tx = this.data.transactions[idx];
+      const targetCard = this.data.cards.find(c => c.id === tx.cardId);
+
+      // Revert old transaction effect on card balance
+      if (targetCard) {
+        targetCard.balance -= tx.amount;
+      }
+
+      // Compute new amount
+      const amountNum = parseFloat(updateData.amount) || 0;
+      const isIncome = updateData.type === 'income';
+      const finalAmount = isIncome ? Math.abs(amountNum) : -Math.abs(amountNum);
+
+      // Apply new transaction effect on card balance
+      if (targetCard) {
+        targetCard.balance += finalAmount;
+      }
+
+      // Update tx fields
+      this.data.transactions[idx] = {
+        ...tx,
+        ...updateData,
+        amount: finalAmount
+      };
+
+      this.recalculateTotalAsset();
+      this.recalculateRunningBalances();
       this.save();
     }
   }
 
   deleteTransaction(txId) {
-    this.data.transactions = this.data.transactions.filter(t => t.id !== txId);
-    this.save();
+    const tx = this.data.transactions.find(t => t.id === txId);
+    if (tx) {
+      const targetCard = this.data.cards.find(c => c.id === tx.cardId);
+      if (targetCard) {
+        targetCard.balance -= tx.amount; // Revert the transaction effect!
+      }
+      this.data.transactions = this.data.transactions.filter(t => t.id !== txId);
+      this.recalculateTotalAsset();
+      this.recalculateRunningBalances();
+      this.save();
+    }
+  }
+
+  recalculateRunningBalances() {
+    this.data.cards.forEach(card => {
+      // Find all transactions for this card
+      const cardTxs = this.data.transactions
+        .filter(t => t.cardId === card.id)
+        .sort((a, b) => new Date(b.datetime) - new Date(a.datetime)); // newest first
+
+      let running = card.balance;
+      cardTxs.forEach(tx => {
+        tx.balanceAfter = running;
+        running -= tx.amount;
+      });
+    });
   }
 
   recalculateTotalAsset() {
@@ -1894,8 +1953,13 @@ class BOCRealAppController {
       if (t.type === 'expense') totalExpense += Math.abs(t.amount);
     });
 
+    const histIncomeEl = document.getElementById('tx-hist-income');
+    const histExpenseEl = document.getElementById('tx-hist-expense');
+
     if (incomeEl) incomeEl.textContent = `¥ ${this.formatMoney(totalIncome)}`;
     if (expenseEl) expenseEl.textContent = `¥ ${this.formatMoney(totalExpense)}`;
+    if (histIncomeEl) histIncomeEl.textContent = `¥ ${this.formatMoney(totalIncome)}`;
+    if (histExpenseEl) histExpenseEl.textContent = `¥ ${this.formatMoney(totalExpense)}`;
 
     if (filtered2026.length === 0) {
       listEl.innerHTML = `<div style="text-align:center; padding: 40px; color: #86909C;">暂无 2026 年交易明细</div>`;
