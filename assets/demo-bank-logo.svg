@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0F766E"/>
+  <path d="M112 165 256 88l144 77v50H112z" fill="#ffffff"/>
+  <path d="M132 238h44v144h-44zm102 0h44v144h-44zm102 0h44v144h-44z" fill="#ffffff"/>
+  <path d="M96 400h320v40H96z" fill="#ffffff"/>
+  <text x="256" y="140" text-anchor="middle" fill="#0F766E" font-family="Arial, sans-serif" font-size="30" font-weight="700">DEMO</text>
+</svg>

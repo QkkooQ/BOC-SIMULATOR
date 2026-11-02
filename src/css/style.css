@@ -1,0 +1,899 @@
+/**
+ * DemoBank mobile UI style system.
+ * Uses CSS and inline SVG only.
+ */
+
+:root {
+  /* 品牌核心色 */
+  --demo-bank-primary: #0F766E;
+  --demo-bank-primary-dark: #115E59;
+  --demo-bank-primary-light: #14B8A6;
+  --demo-bank-blue: #1A6CDE;
+  
+  /* 页面层级背景 */
+  --bg-app: #F5F6F8;
+  --bg-white: #FFFFFF;
+  
+  /* 账户总览米金渐变卡片色 */
+  --account-gold-bg: linear-gradient(135deg, #FAF5EC 0%, #F4EADF 100%);
+  --account-gold-text: #6B5539;
+  
+  /* 资产管理深蓝科技灰 */
+  --asset-dark-bg: linear-gradient(180deg, #2B3443 0%, #3D495B 100%);
+  
+  /* 首页顶部天蓝渐变 */
+  --home-top-bg: linear-gradient(180deg, #E2F0FE 0%, #F3F8FE 50%, #F5F6F8 100%);
+
+  /* 文本颜色 */
+  --text-main: #1D2129;
+  --text-sub: #4E5969;
+  --text-muted: #86909C;
+  --text-gold: #C59A47;
+  
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-sheet: 0 -4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.demo-disclaimer {
+  position: relative;
+  z-index: 10000;
+  padding: 7px 14px;
+  background: #ecfdf5;
+  border-bottom: 1px solid #99f6e4;
+  color: #115e59;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  width: 100%;
+  max-width: 430px;
+  flex-shrink: 0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background-color: #0F172A;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* 桌面预览框，在手机或 iPhone Safari (添加到主屏幕) 模式下为满屏原生形态 */
+.app-viewport {
+  width: 100%;
+  height: auto;
+  max-width: 430px;
+  max-height: 932px;
+  min-height: 0;
+  flex: 1;
+  background-color: var(--bg-app);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 600px) {
+  .app-viewport {
+    border-radius: 44px;
+    border: 10px solid #1E293B;
+    margin: 16px auto;
+  }
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+  flex-shrink: 0;
+}
+
+/* === 通用头部导航栏 === */
+.sub-nav-bar {
+  height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-white);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-main);
+  flex-shrink: 0;
+}
+
+.sub-nav-bar.dark {
+  background: var(--asset-dark-bg);
+  color: #FFFFFF;
+}
+
+.sub-nav-bar .back-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sub-nav-bar .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 主容器可滚动区 */
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10;
+  padding-bottom: 74px;
+  scrollbar-width: none;
+}
+.app-content::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-page {
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+
+.tab-page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ================= SVG 矢量图形封装 ================= */
+.icon-svg {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.icon-svg-lg {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+/* ================= 1. 首页样式 ================= */
+.home-header {
+  padding: 8px 14px 14px 14px;
+  background: var(--home-top-bg);
+}
+
+.home-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.login-avatar-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+
+.login-avatar-pill .avatar-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #E8F2FE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--demo-bank-blue);
+}
+
+/* 沉浸搜索框 */
+.demo-bank-search-pill {
+  flex: 1;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.demo-bank-search-pill .search-btn {
+  color: var(--demo-bank-primary);
+  font-weight: 600;
+  border-left: 1px solid #E5E6EB;
+  padding-left: 10px;
+}
+
+.home-top-icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.home-top-icons .icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+
+/* 首页顶部四大金刚入口 */
+.home-main-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 18px 6px 12px 6px;
+  text-align: center;
+}
+
+.shortcut-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.shortcut-icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(26, 108, 222, 0.1);
+  color: var(--demo-bank-blue);
+}
+
+.shortcut-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* 1888元活动横条 */
+.home-promo-banner {
+  margin: 6px 12px 14px 12px;
+  background: linear-gradient(135deg, #1A4CD8 0%, #2A68EA 100%);
+  border-radius: 16px;
+  padding: 14px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 16px rgba(26, 76, 216, 0.2);
+}
+
+/* 首页弧形白色层底 */
+.home-white-sheet {
+  background: #FFFFFF;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 16px 12px;
+  margin-top: -8px;
+  position: relative;
+  z-index: 5;
+}
+
+.service-grid-10 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px 6px;
+  margin-bottom: 18px;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.service-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-text {
+  font-size: 12px;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.news-marquee-bar {
+  background: #F8F9FB;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+
+.news-badge {
+  background: #FFECEE;
+  color: var(--demo-bank-primary);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.apple-pay-banner {
+  background: linear-gradient(135deg, #FFF9EB 0%, #FFF4E0 100%);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #FFE8BA;
+}
+
+/* ================= 2. 账户总览页样式 ================= */
+.account-overview-container {
+  padding: 12px 14px;
+}
+
+.account-gold-card {
+  background: var(--account-gold-bg);
+  border: 1px solid #EBE1D3;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.gold-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--account-gold-text);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.gold-card-amount {
+  font-size: 30px;
+  font-weight: 800;
+  color: #3D2D1B;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.gold-card-footer {
+  font-size: 12px;
+  color: var(--account-gold-text);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 10px;
+}
+
+.demo-bank-card-real-item {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid #EBF0F5;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.demo-bank-card-real-item:active {
+  transform: scale(0.99);
+}
+
+.real-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.real-card-thumb {
+  width: 58px;
+  height: 36px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #0F766E, #9D1117);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
+.real-card-thumb.blue {
+  background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+}
+
+.real-card-thumb.gold {
+  background: linear-gradient(135deg, #334155, #0F172A);
+  color: #E6C280;
+}
+
+.real-card-no {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.real-card-type {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.real-card-balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid #F1F5F9;
+  font-size: 13px;
+}
+
+.real-card-actions {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px dashed #E2E8F0;
+  padding-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.real-card-actions .action-link {
+  flex: 1;
+  text-align: center;
+}
+
+.add-account-card-btn {
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  border: 1px solid #EBF0F5;
+}
+
+.add-account-card-btn .main-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A6CDE;
+  margin-bottom: 4px;
+}
+
+.add-account-card-btn .sub-text {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ================= 3. 资产管理页样式 ================= */
+.asset-mgmt-header {
+  background: var(--asset-dark-bg);
+  color: #FFFFFF;
+  padding: 12px 16px 24px 16px;
+}
+
+.asset-reference-tip {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
+.asset-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.asset-diag-pill {
+  background: rgba(255, 255, 255, 0.16);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.asset-timestamp {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 18px;
+}
+
+.asset-two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.asset-col-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.asset-col-item .val {
+  font-size: 24px;
+  font-weight: 700;
+  color: #F6DFB3;
+}
+
+.asset-grid-sheet {
+  background: #FFFFFF;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  margin-top: -14px;
+  padding: 16px;
+  min-height: 400px;
+}
+
+.asset-grid-2x {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.asset-box-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.asset-box-item .label {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin-bottom: 4px;
+}
+
+.asset-box-item .number {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* ================= 4. 信用卡页面样式 ================= */
+.credit-hero-card {
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  border-radius: 18px;
+  padding: 20px;
+  color: #FFFFFF;
+  margin: 12px 14px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.credit-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.credit-card-number {
+  font-family: monospace;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #E2E8F0;
+}
+
+.credit-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 14px;
+}
+
+/* ================= 5. 生活服务页样式 ================= */
+.life-header-bar {
+  padding: 12px 14px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.life-location-tag {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ================= 6. 我的中心样式 ================= */
+.mine-header-red {
+  background: var(--demo-bank-primary);
+  color: #FFFFFF;
+  padding: 8px 16px 28px 16px;
+  position: relative;
+}
+
+.mine-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mine-search-input {
+  flex: 1;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #FFFFFF;
+}
+
+.mine-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.mascot-avatar-wrap {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FDE68A, #F59E0B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #FFFFFF;
+  cursor: pointer;
+}
+
+.mascot-setting-badge {
+  position: absolute;
+  bottom: -4px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFF;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+.vip-ribbon-card {
+  background: linear-gradient(90deg, #FDF7EA 0%, #F5E8CC 100%);
+  color: #6A532C;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 4px;
+}
+
+.mine-white-body {
+  background: #F4F5F7;
+  padding: 12px 14px;
+}
+
+.mine-4icons-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 18px 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.mine-asset-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.asset-wave-inner {
+  background: linear-gradient(135deg, #FFFDF9 0%, #FAF5EB 100%);
+  border: 1px solid #F3EAD8;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 10px;
+}
+
+/* ================= 底部 5 大栏目导航 ================= */
+.bottom-tab-bar {
+  height: 64px;
+  background: #FFFFFF;
+  border-top: 1px solid #E8EEF5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: #86909C;
+  cursor: pointer;
+}
+
+.tab-btn .tab-text {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.tab-btn.active {
+  color: var(--demo-bank-primary);
+}
+
+/* ================= 增删改查弹窗 Modal ================= */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-sheet {
+  background: #FFFFFF;
+  width: 100%;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  padding: 20px 20px 36px 20px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #D0D5DD;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #F8FAFC;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.demo-bank-btn-primary {
+  flex: 1;
+  background: var(--demo-bank-primary);
+  color: #FFFFFF;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.demo-bank-btn-danger {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+  padding: 13px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.demo-bank-btn-secondary {
+  flex: 1;
+  background: #F1F5F9;
+  color: #334155;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.receipt-seal {
+  width: 74px;
+  height: 74px;
+  border: 2px solid #0F766E;
+  border-radius: 50%;
+  color: #0F766E;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-15deg);
+  margin: 12px auto;
+}
